@@ -25,8 +25,8 @@ const register_user = (req, res, next) => {
       const errorCode = error.code;
       const errorMessage = error.message;
       // ..
-      console.log(errorCode);
-      console.log(errorMessage);
+      //console.log(errorCode);
+      //console.log(errorMessage);
     });
   res.json(req.body);
 };
