@@ -6,9 +6,7 @@ const csrf = require("csurf");
 //const logger = require("morgan");
 
 //routes
-const indexRouter = require("./routes/index");
 const usersRouter = require("./routes/users");
-const registerRouter = require("./routes/register");
 
 //acess .env variables
 require("dotenv").config();
