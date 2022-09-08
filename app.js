@@ -25,9 +25,10 @@ app.use(express.json());
 app.use(cookieParser());
 app.use(express.urlencoded({ extended: false }));
 
-//app.use("/", indexRouter);
-//app.use("/users", usersRouter);
-app.use("/register", registerRouter);
+//routes
+//Note: some routes are nested
+app.use("/user", usersRouter);
+
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
   next(createError(404, "Page Not found"));

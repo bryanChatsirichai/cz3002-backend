@@ -3,7 +3,10 @@ require("dotenv").config();
 const { initializeApp } = require("firebase/app");
 const { getAuth } = require("firebase/auth");
 const firebaseConfig = require("../configs/firebaseConfig");
-const { createUserWithEmailAndPassword } = require("../service/registerUser");
+const {
+  createUserWithEmailAndPassword,
+  sendEmailVerification,
+} = require("../service/registerUser");
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
@@ -11,23 +14,26 @@ const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 
 //to edit
-const register_user = (req, res, next) => {
+const register_user = async (req, res, next) => {
   const email = req.body.email;
   const password = req.body.password;
-  createUserWithEmailAndPassword(auth, email, password)
-    .then((userCredential) => {
-      // Signed in
-      //console.log(userCredential);
-      const user = userCredential.user;
-      // ...
-    })
-    .catch((error) => {
-      const errorCode = error.code;
-      const errorMessage = error.message;
-      // ..
-      //console.log(errorCode);
-      //console.log(errorMessage);
-    });
+  try {
+    //register the user
+    const userCredential = await createUserWithEmailAndPassword(
+      auth,
+      email,
+      password
+    );
+    const curUser = userCredential.user;
+    await sendEmailVerification(curUser);
+  } catch (error) {
+    const errorCode = error.code;
+    const errorMessage = error.message;
+    // ..
+    console.log(errorCode);
+    console.log(errorMessage);
+  }
+  //Edit the response message later
   res.json(req.body);
 };
 
