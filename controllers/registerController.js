@@ -1,49 +1,57 @@
 //acess .env variables
 require("dotenv").config();
-const { initializeApp } = require("firebase/app");
-const { getAuth } = require("firebase/auth");
-const firebaseConfig = require("../configs/firebaseConfig");
-const {
-  createUserWithEmailAndPassword,
-  sendEmailVerification,
-} = require("../service/registerUser");
+const User = require("../service/registerUser");
+const userRegisterValidation = require("../validation/userValidation");
+const { hashPassword } = require("../service/bcryptPassowrd.js");
 
-// Initialize Firebase
-const app = initializeApp(firebaseConfig);
-// Initialize Firebase Authentication and get a reference to the service
-const auth = getAuth(app);
-
-//to edit
 const register_user = async (req, res, next) => {
-  const email = req.body.email;
-  const password = req.body.password;
-  try {
-    //register the user
-    const userCredential = await createUserWithEmailAndPassword(
-      auth,
-      email,
-      password
-    );
-    const curUser = userCredential.user;
-    await sendEmailVerification(curUser);
-  } catch (error) {
-    const errorCode = error.code;
-    const errorMessage = error.message;
-    // ..
-    console.log(errorCode);
-    console.log(errorMessage);
-    res.json({
-      success: false,
-      message: errorMessage,
-    });
+  //extract user info from req.body
+  const user_info = {
+    name: req.body.name,
+    age: req.body.age,
+    email: req.body.email,
+    password: req.body.password,
+  };
+
+  //Validate before creatung user
+  const validation_result = userRegisterValidation(user_info);
+
+  //check if error object created
+  const error = validation_result.error;
+  if (error) {
+    res.status(400);
+    res.send(error.details[0].message);
     return;
   }
-  //Edit the response message later
-  res.json({
-    success: true,
-    message: "registerd user",
-  });
-  return;
+
+  //checking if user already in DB by email
+  const userExist = await User.findOne({ email: user_info.email });
+  if (userExist) {
+    res.status(400);
+    res.send("Email already exists");
+    return;
+  }
+
+  //Hash password
+  const hashedPassword = await hashPassword(user_info.password);
+
+  //update user_info
+  user_info.password = hashedPassword;
+
+  //create new user
+  // _id field automatically by mongo for the entry
+  const user = new User(user_info);
+  try {
+    const savedUser = await user.save();
+    //res.send({ user: savedUser._id });
+    res.send({ success: true, message: "User created" });
+    return;
+  } catch (error) {
+    //fail to save to DB
+    res.status(400);
+    res.send(error);
+    return;
+  }
 };
 
 module.exports = { register_user };

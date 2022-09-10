@@ -1,29 +1,31 @@
 const createError = require("http-errors");
 const express = require("express");
 const cookieParser = require("cookie-parser");
-const csrf = require("csurf");
+const mongoose = require("mongoose");
+//const csrf = require("csurf");
 //const path = require("path");
 //const logger = require("morgan");
 
-//routes
-const usersRouter = require("./routes/users");
+const app = express();
 
 //acess .env variables
 require("dotenv").config();
 
-const app = express();
+//routes
+const usersRouter = require("./routes/user");
 
-// view engine setup
+
+// MiddleWear
 //app.set("views", path.join(__dirname, "views"));
 //app.set("view engine", "jade");
 
 //app.use(logger("dev"));
 //app.use(express.static(path.join(__dirname, "public")));
-app.use(express.json());
+app.use(express.json()); //body-parser
 app.use(cookieParser());
 app.use(express.urlencoded({ extended: false }));
 
-//routes
+//Route middleware
 //Note: some routes are nested
 app.use("/user", usersRouter);
 
@@ -43,8 +45,18 @@ app.use(function (err, req, res, next) {
   res.send({ success: false, message: err.message });
 });
 
-const port = process.env.PORT;
-app.listen(port, () => {
-  console.log(`Listening on port ${port}`);
-});
+//Connect to DB upon start-up
+const start = async () => {
+  try {
+    await mongoose.connect(process.env.MONGO_DB_CONNECT);
+    console.log("MongoDB connection establish");
+    const port = process.env.PORT;
+    app.listen(port, () => {
+      console.log(`Listening on port ${port}`);
+    });
+  } catch (error) {
+    console.log(error);
+  }
+};
+start();
 module.exports = app;
