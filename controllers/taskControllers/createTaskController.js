@@ -1,11 +1,23 @@
 //acess .env variables
 require("dotenv").config();
 const Task = require("../../service/taskServices/createTask");
+const taskValidation = require("../../validation/taskValidation");
 const createTask = async (req, res, next) => {
   const task_info = {
-    userId: req.body.userId,
+    userId: req.body.user._id,
     detail: req.body.detail,
   };
+  //Validate before creatung user
+  const validation_result = taskValidation(task_info);
+
+  //check if error object created
+  const error = validation_result.error;
+  if (error) {
+    res.status(400);
+    res.send(error.details[0].message);
+    return;
+  }
+
   //create new task
   // _id field automatically by mongo for the entry
   const task = await new Task(task_info);
@@ -22,4 +34,4 @@ const createTask = async (req, res, next) => {
   }
 };
 
-module.exports = { createTask };
+module.exports = createTask;
