@@ -1,14 +1,14 @@
 //acess .env variables
 require("dotenv").config();
-const User = require("../service/registerUser");
-const userRegisterValidation = require("../validation/userValidation");
-const { hashPassword } = require("../service/bcryptPassowrd.js");
+const User = require("../../service/authServices/registerUser");
+const userRegisterValidation = require("../../validation/userValidation");
+const { hashPassword } = require("../../service/authServices/bcryptPassowrd");
 
 const register_user = async (req, res, next) => {
   //extract user info from req.body
   const user_info = {
     name: req.body.name,
-    age: req.body.age,
+    region: req.body.region,
     email: req.body.email,
     password: req.body.password,
   };
@@ -44,6 +44,7 @@ const register_user = async (req, res, next) => {
   try {
     const savedUser = await user.save();
     //res.send({ user: savedUser._id });
+    res.status(201);
     res.send({ success: true, message: "User created" });
     return;
   } catch (error) {

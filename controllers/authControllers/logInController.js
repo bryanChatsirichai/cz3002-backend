@@ -1,8 +1,8 @@
 //access .env variables
 require("dotenv").config();
-const User = require("../service/loginUser");
-const userLoginValidation = require("../validation/loginValidation");
-const { validatePassword } = require("../service/bcryptPassowrd");
+const User = require("../../service/authServices/loginUser");
+const userLoginValidation = require("../../validation/loginValidation");
+const { validatePassword } = require("../../service/authServices/bcryptPassowrd");
 const jwt = require("jsonwebtoken");
 
 //Validate the login_fields before atempting to login
@@ -46,16 +46,17 @@ const login_user = async (req, res, next) => {
     return;
   }
 
-  //create and assign a token
+  //create and assign a token base on _id, unique user id
   const token = jwt.sign(
     {
       _id: userExist._id,
     },
     process.env.JWT_TOKEN_SECRET
   );
-  //add to res,header instead of body for the response
+  //add to res.header instead of body for the response
   res.header("auth-token", token);
   //Sucessful
+  //send to be modified
   res.send(token);
   return;
 };

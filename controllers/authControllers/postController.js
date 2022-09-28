@@ -1,4 +1,4 @@
-const User = require("../service/loginUser");
+const User = require("../../service/authServices/loginUser");
 const post = async (req, res, next) => {
   //find user base on token
   try {
