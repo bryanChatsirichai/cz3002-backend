@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-const formateDate = require("../service/utils/formateDate");
+const { curFormateDate } = require("../service/utils/formateDate");
 //Schema of Message
 const MessageSchema = new mongoose.Schema({
   //tie each Message to user-id
@@ -13,7 +13,7 @@ const MessageSchema = new mongoose.Schema({
   },
   createdAt: {
     type: String,
-    default: formateDate(new Date()),
+    default: curFormateDate,
   },
 });
 

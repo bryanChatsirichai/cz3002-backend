@@ -2,7 +2,7 @@ function padTo2Digits(num) {
   return num.toString().padStart(2, "0");
 }
 
-const formateDate = function formatDate(date) {
+const formateDate = (date) => {
   return (
     [
       date.getFullYear(),
@@ -18,4 +18,9 @@ const formateDate = function formatDate(date) {
   );
 };
 
-module.exports = formateDate;
+const curFormateDate = () => {
+  curDate = new Date();
+  return formateDate(curDate);
+};
+
+module.exports = { formateDate, curFormateDate };

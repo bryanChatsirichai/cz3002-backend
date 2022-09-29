@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-const formateDate = require("../service/utils/formateDate");
+const { curFormateDate } = require("../service/utils/formateDate");
 //Schema of task
 const TaskSchema = new mongoose.Schema({
   //tie each task to user-id
@@ -17,7 +17,7 @@ const TaskSchema = new mongoose.Schema({
   },
   createdAt: {
     type: String,
-    default: formateDate(new Date()),
+    default: curFormateDate,
   },
 });
 
