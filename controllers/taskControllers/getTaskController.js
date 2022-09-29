@@ -6,7 +6,8 @@ const getTask = async (req, res, next) => {
   const task_info = {
     userId: req.body.user._id,
   };
-  const result = await Task.find({ task_info });
+  console.log(task_info);
+  const result = await Task.find(task_info);
   res.status(200);
   res.send(result);
 };

@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-
+const formateDate = require("../service/utils/formateDate");
 //Schema of user
 const userSchema = new mongoose.Schema({
   name: {
@@ -19,8 +19,8 @@ const userSchema = new mongoose.Schema({
     require: true,
   },
   date: {
-    type: Date,
-    default: Date.now,
+    type: String,
+    default: formateDate(new Date()),
   },
 });
 

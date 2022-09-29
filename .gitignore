@@ -2,3 +2,5 @@
 /package-lock.json
 /.env
 /serviceAccountKey.json
+/test.js
+/test2.js
