@@ -1,6 +1,7 @@
 //acess .env variables
 require("dotenv").config();
 const User = require("../../service/authServices/registerUser");
+const Message = require("../../service/messageServices/createMessage");
 const userRegisterValidation = require("../../validation/userValidation");
 const { hashPassword } = require("../../service/authServices/bcryptPassowrd");
 
@@ -41,8 +42,16 @@ const register_user = async (req, res, next) => {
   //create new user
   // _id field automatically by mongo for the entry
   const user = new User(user_info);
+
+  //Gerate a welcome message to the message box upon Creating account
+  const welcomeMessage = new Message({
+    userId: user._id,
+    detail: "Thank you for Signing up",
+  });
+  
   try {
     const savedUser = await user.save();
+    const savedWelcomeMessage = await welcomeMessage.save();
     //res.send({ user: savedUser._id });
     res.status(201);
     res.send({ success: true, message: "User created" });

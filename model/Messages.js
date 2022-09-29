@@ -1,8 +1,8 @@
 const mongoose = require("mongoose");
 const { curFormateDate } = require("../service/utils/formateDate");
-//Schema of task
-const TaskSchema = new mongoose.Schema({
-  //tie each task to user-id
+//Schema of Message
+const MessageSchema = new mongoose.Schema({
+  //tie each Message to user-id
   userId: {
     type: String,
     require: true,
@@ -11,15 +11,11 @@ const TaskSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  completed: {
-    type: Boolean,
-    default: false,
-  },
   createdAt: {
     type: String,
     default: curFormateDate,
   },
 });
 
-TaskModel = mongoose.model("Task", TaskSchema);
-module.exports = TaskModel;
+MessageModel = mongoose.model("Message", MessageSchema);
+module.exports = MessageModel;
