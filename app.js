@@ -2,12 +2,15 @@ const createError = require("http-errors");
 const express = require("express");
 const cookieParser = require("cookie-parser");
 const mongoose = require("mongoose");
+const cors = require("cors");
 //const csrf = require("csurf");
 //const path = require("path");
 //const logger = require("morgan");
 
 const app = express();
 
+//enable cross origin
+app.use(cors());
 //acess .env variables
 require("dotenv").config();
 
