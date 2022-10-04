@@ -57,6 +57,7 @@ const login_user = async (req, res, next) => {
   res.header("auth-token", token);
   //Sucessful
   //send to be modified
+  res.status(200)
   res.send(token);
   return;
 };
