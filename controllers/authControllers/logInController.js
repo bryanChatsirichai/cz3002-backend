@@ -4,7 +4,7 @@ const User = require('../../service/authServices/loginUser');
 const userLoginValidation = require('../../validation/loginValidation');
 const { validatePassword } = require('../../service/authServices/bcryptPassowrd');
 const jwt = require('jsonwebtoken');
-const LoginError = require('../../middlewear/customErros/loginError');
+const LoginError = require('../../middlewear/customErrors/loginError');
 const { StatusCodes } = require('http-status-codes');
 
 //Validate the login_fields before atempting to login
