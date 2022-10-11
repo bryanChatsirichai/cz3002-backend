@@ -1,6 +1,8 @@
 //acess .env variables
 require('dotenv').config();
 const Task = require('../../service/taskServices/updateTask');
+const TaskError = require('../../middlewear/customErrors/taskError');
+const { StatusCodes } = require('http-status-codes');
 const updateTask = async (req, res, next) => {
   //update the completed status
   const task_info = {
@@ -14,11 +16,8 @@ const updateTask = async (req, res, next) => {
   const result = await Task.updateOne(task_info, { $set: { completed: newCompleteStatus } });
   //console.log(result);
   if (result.modifiedCount == 0) {
-    const updateError = new Error('No update was done');
-    console.log(updateError.message);
-    res.status(400);
-    next(updateError);
-    //res.send(new Error('description'));
+    const taskError = new TaskError('No update was done', StatusCodes.BAD_REQUEST);
+    next(taskError);
     return;
   }
   res.status(200);

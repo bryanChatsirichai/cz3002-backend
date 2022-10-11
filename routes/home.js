@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const createTask = require('../controllers/taskControllers/createTaskController');
+const deleteTask = require('../controllers/taskControllers/deleteTaskController');
 const getTask = require('../controllers/taskControllers/getTaskController');
 const updateTask = require('../controllers/taskControllers/updateTaskController');
 //private route - middlerwear
@@ -14,7 +15,10 @@ router.route('/task').post(verify, createTask);
 //get all tasks belonging to a user by userId
 router.route('/task').get(verify, getTask);
 
-// /home/tasl
+// /home/task
 //update specific task
 router.route('/task').patch(verify, updateTask);
+
+// /home/task
+router.route('/task').delete(verify, deleteTask);
 module.exports = router;

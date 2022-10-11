@@ -54,7 +54,7 @@ const register_user = async (req, res, next) => {
     const savedUser = await user.save();
     const savedWelcomeMessage = await welcomeMessage.save();
     //res.send({ user: savedUser._id });
-    res.status(201);
+    res.status(StatusCodes.CREATED);
     res.send({ success: true, message: 'User created' });
     return;
   } catch (error) {
