@@ -29,8 +29,8 @@ const register_user = async (req, res, next) => {
   //checking if user already in DB by email
   const userExist = await User.findOne({ email: user_info.email });
   if (userExist) {
-    const registerError = new RegisterError('Email already exist');
-    next(registerError, StatusCodes.NOT_ACCEPTABLE);
+    const registerError = new RegisterError('Email already exist', StatusCodes.NOT_ACCEPTABLE);
+    next(registerError);
     return;
   }
 

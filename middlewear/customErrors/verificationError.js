@@ -1,8 +1,8 @@
-class RegisterError extends Error {
+class VerificationError extends Error {
   constructor(message, status) {
     super(message); // (1)
     this.status = status;
   }
 }
 
-module.exports = RegisterError;
+module.exports = VerificationError;
