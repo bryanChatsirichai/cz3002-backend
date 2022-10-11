@@ -1,9 +1,11 @@
 //access .env variables
-require("dotenv").config();
-const User = require("../../service/authServices/loginUser");
-const userLoginValidation = require("../../validation/loginValidation");
-const { validatePassword } = require("../../service/authServices/bcryptPassowrd");
-const jwt = require("jsonwebtoken");
+require('dotenv').config();
+const User = require('../../service/authServices/loginUser');
+const userLoginValidation = require('../../validation/loginValidation');
+const { validatePassword } = require('../../service/authServices/bcryptPassowrd');
+const jwt = require('jsonwebtoken');
+const LoginError = require('../../middlewear/customErros/loginError');
+const { StatusCodes } = require('http-status-codes');
 
 //Validate the login_fields before atempting to login
 const login_user = async (req, res, next) => {
@@ -19,15 +21,18 @@ const login_user = async (req, res, next) => {
   //check if error object created
   const error = validation_result.error;
   if (error) {
-    res.status(400);
-    res.send(error.details[0].message);
+    const loginError = new LoginError(error.details[0].message);
+    next(loginError, StatusCodes.BAD_REQUEST);
+    // console.log(error.details[0].message);
+    // res.status(400);
+    // res.send(error.details[0].message);
     return;
   }
   //checking if user exist in DB does NOT exist, using email
   const userExist = await User.findOne({ email: user_info.email });
   if (!userExist) {
-    res.status(400);
-    res.send("Email does not exist");
+    const loginError = new LoginError('Email does not exist', StatusCodes.BAD_REQUEST);
+    next(loginError);
     return;
   }
 
@@ -35,14 +40,10 @@ const login_user = async (req, res, next) => {
   const unHash_password = req.body.password;
   const hashed_password = userExist.password;
 
-  const valid_password = await validatePassword(
-    unHash_password,
-    hashed_password
-  );
+  const valid_password = await validatePassword(unHash_password, hashed_password);
   if (!valid_password) {
-    //fail
-    res.status(400);
-    res.send("Invalid password");
+    const loginError = new LoginError('Invalid Password', StatusCodes.UNAUTHORIZED);
+    next(loginError);
     return;
   }
 
@@ -54,10 +55,12 @@ const login_user = async (req, res, next) => {
     process.env.JWT_TOKEN_SECRET
   );
   //add to res.header instead of body for the response
-  res.header("auth-token", token);
+  res.header('auth_token', token);
   //Sucessful
   //send to be modified
-  res.send(token);
+  data = { auth_token: token };
+  res.status(200);
+  res.send(data);
   return;
 };
 
