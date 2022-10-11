@@ -3,7 +3,7 @@ require('dotenv').config();
 const User = require('../../service/authServices/registerUser');
 const Message = require('../../service/messageServices/createMessage');
 const userRegisterValidation = require('../../validation/userValidation');
-const RegisterError = require('../../middlewear/customErros/registerError');
+const RegisterError = require('../../middlewear/customErrors/registerError');
 const { hashPassword } = require('../../service/authServices/bcryptPassowrd');
 const { StatusCodes } = require('http-status-codes');
 const register_user = async (req, res, next) => {
