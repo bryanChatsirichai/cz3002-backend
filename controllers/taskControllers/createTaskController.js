@@ -2,6 +2,9 @@
 require('dotenv').config();
 const Task = require('../../service/taskServices/createTask');
 const taskValidation = require('../../validation/taskValidation');
+const TaskError = require('../../middlewear/customErrors/taskError');
+const { StatusCodes } = require('http-status-codes');
+
 const createTask = async (req, res, next) => {
   const task_info = {
     userId: req.body.user._id,
@@ -9,14 +12,14 @@ const createTask = async (req, res, next) => {
     taskId: req.body.taskId,
     priority: req.body.priority,
   };
-  //Validate before creatung user
+  //Validate before creatung usergit 
   const validation_result = taskValidation(task_info);
 
   //check if error object created
   const error = validation_result.error;
   if (error) {
-    res.status(400);
-    res.send(error.details[0].message);
+    const taskError = new TaskError(error.details[0].message, StatusCodes.BAD_REQUEST);
+    next(taskError);
     return;
   }
 
@@ -31,8 +34,8 @@ const createTask = async (req, res, next) => {
     return;
   } catch (error) {
     //fail to save to DB
-    res.status(400);
-    res.send(error);
+    const taskError = new TaskError(error.message, StatusCodes.BAD_REQUEST);
+    next(taskError);
     return;
   }
 };
