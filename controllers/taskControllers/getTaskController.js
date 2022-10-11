@@ -13,10 +13,10 @@ const getTask = async (req, res, next) => {
     const result = await Task.find(task_info);
     result.sort(sortByCreatedAtAscending);
     //console.log(result);
-    res.status(200);
+    res.status(StatusCodes.OK);
     res.send(result);
   } catch (error) {
-    const taskError = new TaskError("Error Retriving all tasks", StatusCodes.BAD_REQUEST);
+    const taskError = new TaskError('Error Retriving all tasks', StatusCodes.BAD_REQUEST);
     next(taskError);
   }
 };

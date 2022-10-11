@@ -59,7 +59,7 @@ const login_user = async (req, res, next) => {
   //Sucessful
   //send to be modified
   data = { auth_token: token };
-  res.status(200);
+  res.status(StatusCodes.OK);
   res.send(data);
   return;
 };

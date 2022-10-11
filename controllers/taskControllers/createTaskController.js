@@ -12,7 +12,7 @@ const createTask = async (req, res, next) => {
     taskId: req.body.taskId,
     priority: req.body.priority,
   };
-  //Validate before creatung usergit 
+  //Validate before creatung usergit
   const validation_result = taskValidation(task_info);
 
   //check if error object created
@@ -29,7 +29,7 @@ const createTask = async (req, res, next) => {
   try {
     const savedTask = await task.save();
     //console.log('savedTask', savedTask);
-    res.status(201);
+    res.status(StatusCodes.CREATED);
     res.send({ success: true, message: 'Task created' });
     return;
   } catch (error) {
