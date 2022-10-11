@@ -21,8 +21,8 @@ const login_user = async (req, res, next) => {
   //check if error object created
   const error = validation_result.error;
   if (error) {
-    const loginError = new LoginError(error.details[0].message);
-    next(loginError, StatusCodes.BAD_REQUEST);
+    const loginError = new LoginError(error.details[0].message, StatusCodes.BAD_REQUEST);
+    next(loginError);
     // console.log(error.details[0].message);
     // res.status(400);
     // res.send(error.details[0].message);

@@ -2,7 +2,8 @@
 //access .env variables
 require('dotenv').config();
 const jwt = require('jsonwebtoken');
-
+const VerificationError = require('../middlewear/customErrors/verificationError');
+const { StatusCodes } = require('http-status-codes');
 //middlewear function to routes that are to be protected
 //Every private route to access will use this middlewear to check token available and legit
 //can add to any route that are to be protected by auth-token
@@ -12,8 +13,8 @@ const auth = async (req, res, next) => {
   const token = req.header('auth_token');
   if (!token) {
     //auth-token does not exist
-    res.status(401);
-    res.send('Access Denied');
+    const verificationError = new VerificationError('Access Denied', StatusCodes.UNAUTHORIZED);
+    next(verificationError);
     return;
   }
   try {
@@ -27,8 +28,8 @@ const auth = async (req, res, next) => {
     next();
   } catch (error) {
     //fail verification
-    res.status(400);
-    res.send('Invalid Token');
+    const verificationError = new VerificationError('Invalid Token', StatusCodes.NOT_ACCEPTABLE);
+    next(verificationError);
     return;
   }
 };
