@@ -1,10 +1,7 @@
 //acess .env variables
-require("dotenv").config();
-const Task = require("../../service/taskServices/getTask");
-const {
-  sortByCreatedAtDescending,
-  sortByCreatedAtAscending,
-} = require("../../service/utils/sortBy");
+require('dotenv').config();
+const Task = require('../../service/taskServices/getTask');
+const { sortByCreatedAtDescending, sortByCreatedAtAscending } = require('../../service/utils/sortBy');
 const getTask = async (req, res, next) => {
   //get all task base related to userId
   const task_info = {
@@ -12,7 +9,7 @@ const getTask = async (req, res, next) => {
   };
   const result = await Task.find(task_info);
   result.sort(sortByCreatedAtAscending);
-  console.log(result);
+  //console.log(result);
   res.status(200);
   res.send(result);
 };

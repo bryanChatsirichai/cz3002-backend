@@ -1,7 +1,7 @@
 //private route
 //access .env variables
-require("dotenv").config();
-const jwt = require("jsonwebtoken");
+require('dotenv').config();
+const jwt = require('jsonwebtoken');
 
 //middlewear function to routes that are to be protected
 //Every private route to access will use this middlewear to check token available and legit
@@ -9,11 +9,11 @@ const jwt = require("jsonwebtoken");
 //oken is assign to user logged IN, added to res.header
 const auth = async (req, res, next) => {
   //get from header
-  const token = req.header("auth-token");
+  const token = req.header('auth_token');
   if (!token) {
     //auth-token does not exist
     res.status(401);
-    res.send("Access Denied");
+    res.send('Access Denied');
     return;
   }
   try {
@@ -28,7 +28,7 @@ const auth = async (req, res, next) => {
   } catch (error) {
     //fail verification
     res.status(400);
-    res.send("Invalid Token");
+    res.send('Invalid Token');
     return;
   }
 };

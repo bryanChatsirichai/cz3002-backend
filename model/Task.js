@@ -11,6 +11,14 @@ const TaskSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  taskId: {
+    type: String,
+    required: true,
+  },
+  priority: {
+    type: String,
+    required: true,
+  },
   completed: {
     type: Boolean,
     default: false,

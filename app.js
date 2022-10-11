@@ -1,23 +1,25 @@
-require("dotenv").config();
-const createError = require("http-errors");
-const express = require("express");
-const cookieParser = require("cookie-parser");
-const mongoose = require("mongoose");
-const cors = require("cors");
+require('dotenv').config();
+const createError = require('http-errors');
+const express = require('express');
+const cookieParser = require('cookie-parser');
+const mongoose = require('mongoose');
+const cors = require('cors');
+const customErroHandler = require('./middlewear/customErros/customErrorHandler');
 //const csrf = require("csurf");
 //const path = require("path");
 //const logger = require("morgan");
 
 const app = express();
 
+const corsOptions = {
+  exposedHeaders: 'auth_token',
+};
 //enable cross origin
-app.use(cors());
-//acess .env variables
-
+app.use(cors(corsOptions));
 
 //routes
-const usersRouter = require("./routes/user");
-const homeRouter = require("./routes/home");
+const usersRouter = require('./routes/user');
+const homeRouter = require('./routes/home');
 
 // MiddleWear
 //app.set("views", path.join(__dirname, "views"));
@@ -31,30 +33,22 @@ app.use(express.urlencoded({ extended: false }));
 
 //Route middleware
 //Note: some routes are nested
-app.use("/user", usersRouter);
-app.use("/home", homeRouter);
+app.use('/user', usersRouter);
+app.use('/home', homeRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
-  next(createError(404, "Page Not found"));
+  next(createError(404, 'Page Not found'));
 });
 
 // error handler
-app.use(function (err, req, res, next) {
-  //set locals, only providing error in development
-  //res.locals.message = err.message;
-  //res.locals.error = req.app.get("env") === "development" ? err : {};
-  // render the error page
-  res.status(err.status || 500);
-  //res.render("error")
-  res.send({ success: false, message: err.message });
-});
+app.use(customErroHandler);
 
 //Connect to DB upon start-up
 const start = async () => {
   try {
     await mongoose.connect(process.env.MONGO_DB_CONNECT);
-    console.log("MongoDB connection establish");
+    console.log('MongoDB connection establish');
     const port = process.env.PORT;
     app.listen(port, () => {
       console.log(`Listening on port ${port}`);
