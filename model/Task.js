@@ -1,5 +1,5 @@
-const mongoose = require("mongoose");
-const { curFormateDate } = require("../service/utils/formateDate");
+const mongoose = require('mongoose');
+const { curFormateDate } = require('../service/utils/formateDate');
 //Schema of task
 const TaskSchema = new mongoose.Schema({
   //tie each task to user-id
@@ -30,5 +30,5 @@ const TaskSchema = new mongoose.Schema({
   },
 });
 
-TaskModel = mongoose.model("Task", TaskSchema);
+TaskModel = mongoose.model('Task', TaskSchema);
 module.exports = TaskModel;

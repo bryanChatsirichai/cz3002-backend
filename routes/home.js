@@ -20,5 +20,5 @@ router.route('/task').get(verify, getTask);
 router.route('/task').patch(verify, updateTask);
 
 // /home/task
-router.route('/task').delete(verify, deleteTask);
+router.route('/task/:id').delete(verify, deleteTask);
 module.exports = router;
