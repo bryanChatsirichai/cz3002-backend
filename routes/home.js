@@ -17,7 +17,7 @@ router.route('/task').get(verify, getTask);
 
 // /home/task
 //update specific task
-router.route('/task').patch(verify, updateTask);
+router.route('/task/:id').patch(verify, updateTask);
 
 // /home/task
 router.route('/task/:id').delete(verify, deleteTask);
