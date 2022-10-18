@@ -15,6 +15,7 @@ const customErroHandler = (err, req, res, next) => {
   if (err instanceof LoginError) {
     res.status(err.status || 400);
     //res.render("error")
+    //console.log("login error")
     res.send({ success: false, message: err.message });
     return;
   }

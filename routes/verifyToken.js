@@ -11,6 +11,7 @@ const { StatusCodes } = require('http-status-codes');
 const auth = async (req, res, next) => {
   //get from header
   const token = req.header('auth_token');
+  //console.log('auth_token', token);
   if (!token) {
     //auth-token does not exist
     const verificationError = new VerificationError('Access Denied', StatusCodes.UNAUTHORIZED);

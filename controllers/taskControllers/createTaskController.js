@@ -8,8 +8,8 @@ const { StatusCodes } = require('http-status-codes');
 const createTask = async (req, res, next) => {
   const task_info = {
     userId: req.body.user._id,
-    detail: req.body.detail,
-    taskId: req.body.taskId,
+    task: req.body.task,
+    id: req.body.id,
     priority: req.body.priority,
   };
   //Validate before creatung usergit

@@ -7,11 +7,12 @@ const TaskSchema = new mongoose.Schema({
     type: String,
     require: true,
   },
-  detail: {
+  task: {
     type: String,
     required: true,
   },
-  taskId: {
+  //task id made from uuid
+  id: {
     type: String,
     required: true,
   },
