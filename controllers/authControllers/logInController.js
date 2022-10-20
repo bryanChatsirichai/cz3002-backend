@@ -55,6 +55,7 @@ const login_user = async (req, res, next) => {
     process.env.JWT_TOKEN_SECRET
   );
   //add to res.header instead of body for the response
+  //console.log('auth_token', token);
   res.header('auth_token', token);
   //Sucessful
   //send to be modified

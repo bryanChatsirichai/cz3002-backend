@@ -1,9 +1,15 @@
 const express = require('express');
 const router = express.Router();
+
+//TASK
 const createTask = require('../controllers/taskControllers/createTaskController');
 const deleteTask = require('../controllers/taskControllers/deleteTaskController');
 const getTask = require('../controllers/taskControllers/getTaskController');
 const updateTask = require('../controllers/taskControllers/updateTaskController');
+
+//PROFILE
+const getProfile = require('../controllers/profileControllers/getProfile');
+
 //private route - middlerwear
 const verify = require('./verifyToken');
 
@@ -20,5 +26,11 @@ router.route('/task').get(verify, getTask);
 router.route('/task/:id').patch(verify, updateTask);
 
 // /home/task
+//delete specific task
 router.route('/task/:id').delete(verify, deleteTask);
+
+// /home/profile
+// get the profile
+router.route('/profile').get(verify, getProfile);
+
 module.exports = router;

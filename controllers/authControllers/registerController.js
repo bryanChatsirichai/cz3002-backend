@@ -1,7 +1,11 @@
 //acess .env variables
 require('dotenv').config();
+//services
 const User = require('../../service/authServices/registerUser');
 const Message = require('../../service/messageServices/createMessage');
+const Profile = require('../../service/profileServices/createProfile');
+//validation
+const verify = require('../../routes/verifyToken');
 const userRegisterValidation = require('../../validation/userValidation');
 const RegisterError = require('../../middlewear/customErrors/registerError');
 const { hashPassword } = require('../../service/authServices/bcryptPassowrd');
@@ -44,21 +48,33 @@ const register_user = async (req, res, next) => {
   // _id field automatically by mongo for the entry
   const user = new User(user_info);
 
-  //Gerate a welcome message to the message box upon Creating account
+  //Generate a welcome message to the message box upon Creating account
   const welcomeMessage = new Message({
     userId: user._id,
     detail: 'Thank you for Signing up',
   });
 
+  //Generate Profile tie to user upon Creating account
+  const profile = new Profile({
+    userId: user._id,
+    name: user.name,
+    xp: 0,
+    gold: 0,
+  });
   try {
     const savedUser = await user.save();
     const savedWelcomeMessage = await welcomeMessage.save();
+    const savedProfile = await profile.save();
     //res.send({ user: savedUser._id });
-    res.status(StatusCodes.CREATED);
-    res.send({ success: true, message: 'User created' });
-    return;
+    //res.status(StatusCodes.CREATED);
+    //send back auth_token
+    //res.send({ success: true, message: user._id });
+    //return;
+
+    //afterter register do login hiddenly
+    next();
   } catch (error) {
-    const registerError = new RegisterError(error.messag, StatusCodes.BAD_REQUEST);
+    const registerError = new RegisterError(error.message, StatusCodes.BAD_REQUEST);
     //fail to save to DB
     next(registerError);
     return;

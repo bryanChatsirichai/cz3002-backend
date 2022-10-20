@@ -2,6 +2,7 @@ const RegisterError = require('./registerError');
 const LoginError = require('./loginError');
 const VerificationError = require('./verificationError');
 const TaskError = require('./taskError');
+const ProfileError = require('./profileError');
 
 //custom error handler middlewear
 const customErroHandler = (err, req, res, next) => {
@@ -27,6 +28,12 @@ const customErroHandler = (err, req, res, next) => {
     return;
   }
   if (err instanceof TaskError) {
+    res.status(err.status || 400);
+    //res.render("error")
+    res.send({ success: false, message: err.message });
+    return;
+  }
+  if (err instanceof ProfileError) {
     res.status(err.status || 400);
     //res.render("error")
     res.send({ success: false, message: err.message });
