@@ -4,15 +4,17 @@ const Task = require('../../service/taskServices/updateTask');
 const TaskError = require('../../middlewear/customErrors/taskError');
 const { StatusCodes } = require('http-status-codes');
 const updateTask = async (req, res, next) => {
+  //console.log(req.body);
   //update the completed status
+  //console.log(req.params['id']);
   const task_info = {
     userId: req.body.user._id,
-    taskId: req.body.taskId,
+    id: req.params['id'],
   };
 
   //the spicific task to update the completion status
   //example syntax updateOne({ name: 'Annu' }, { $set: { age: 25 } });
-  newCompleteStatus = req.body.completed;
+  const newCompleteStatus = req.body.completed;
   const result = await Task.updateOne(task_info, { $set: { completed: newCompleteStatus } });
   //console.log(result);
   if (result.modifiedCount == 0) {

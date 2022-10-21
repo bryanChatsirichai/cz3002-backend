@@ -7,8 +7,8 @@ const taskValidation = (login_fields) => {
     //user unqie
     userId: Joi.string().required(),
     //uuid of task given by FE
-    detail: Joi.string().required(),
-    taskId: Joi.string().required(),
+    task: Joi.string().required(),
+    id: Joi.string().required(),
     priority: Joi.string().required(),
 
     //default set to false by mongo
