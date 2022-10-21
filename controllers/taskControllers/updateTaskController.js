@@ -14,7 +14,7 @@ const updateTask = async (req, res, next) => {
 
   //the spicific task to update the completion status
   //example syntax updateOne({ name: 'Annu' }, { $set: { age: 25 } });
-  newCompleteStatus = req.body.completed;
+  const newCompleteStatus = req.body.completed;
   const result = await Task.updateOne(task_info, { $set: { completed: newCompleteStatus } });
   //console.log(result);
   if (result.modifiedCount == 0) {

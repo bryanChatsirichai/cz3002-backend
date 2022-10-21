@@ -9,6 +9,7 @@ const updateTask = require('../controllers/taskControllers/updateTaskController'
 
 //PROFILE
 const getProfile = require('../controllers/profileControllers/getProfile');
+const updateProfile = require('../controllers/profileControllers/updateProfile');
 
 //private route - middlerwear
 const verify = require('./verifyToken');
@@ -33,4 +34,6 @@ router.route('/task/:id').delete(verify, deleteTask);
 // get the profile
 router.route('/profile').get(verify, getProfile);
 
+// update the profile
+router.route('/profile').patch(verify, updateProfile);
 module.exports = router;
