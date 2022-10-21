@@ -11,6 +11,9 @@ const updateTask = require('../controllers/taskControllers/updateTaskController'
 const getProfile = require('../controllers/profileControllers/getProfile');
 const updateProfile = require('../controllers/profileControllers/updateProfile');
 
+//SHOP
+const buyChar = require('../controllers/shopController/buyChar');
+
 //private route - middlerwear
 const verify = require('./verifyToken');
 
@@ -34,6 +37,12 @@ router.route('/task/:id').delete(verify, deleteTask);
 // get the profile
 router.route('/profile').get(verify, getProfile);
 
+// /home/profile
 // update the profile
 router.route('/profile').patch(verify, updateProfile);
+
+// /home/shop
+//buy character from shop
+router.route('/shop/characters').patch(verify, buyChar);
+
 module.exports = router;

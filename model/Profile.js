@@ -19,6 +19,10 @@ const ProfileSchema = new mongoose.Schema({
     type: Number,
     required: true,
   },
+  char_bought: {
+    type: Array,
+    default: [],
+  },
   //   createdAt: {
   //     type: String,
   //     default: curFormateDate,
