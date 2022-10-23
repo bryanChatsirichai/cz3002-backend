@@ -1,5 +1,5 @@
-const mongoose = require('mongoose');
-const { curFormateDate } = require('../service/utils/formateDate');
+const mongoose = require("mongoose");
+const { curFormateDate } = require("../service/utils/formateDate");
 //Schema of Profile
 const ProfileSchema = new mongoose.Schema({
   //tie each Profile to user-id
@@ -21,11 +21,15 @@ const ProfileSchema = new mongoose.Schema({
   },
   char_bought: {
     type: Array,
-    default: ['warrior 1'],
+    default: ["warrior 1"],
   },
   char_equipped: {
     type: Array,
-    default: ['warrior 1'],
+    default: ["warrior 1"],
+  },
+  freinds: {
+    type: Array,
+    default: [],
   },
   //   createdAt: {
   //     type: String,
@@ -33,5 +37,5 @@ const ProfileSchema = new mongoose.Schema({
   //   },
 });
 
-ProfileModel = mongoose.model('Profile', ProfileSchema);
+ProfileModel = mongoose.model("Profile", ProfileSchema);
 module.exports = ProfileModel;
