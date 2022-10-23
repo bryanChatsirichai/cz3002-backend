@@ -4,6 +4,7 @@ require('dotenv').config();
 const User = require('../../service/authServices/registerUser');
 const Message = require('../../service/messageServices/createMessage');
 const Profile = require('../../service/profileServices/createProfile');
+const Enemy = require('../../service/enemyServices/createEnemy');
 //validation
 const verify = require('../../routes/verifyToken');
 const userRegisterValidation = require('../../validation/userValidation');
@@ -61,16 +62,25 @@ const register_user = async (req, res, next) => {
     xp: 0,
     gold: 0,
   });
+  const enemy = new Enemy({
+    userId: user._id,
+    type: 'dark_mage',
+    name: '',
+    hp: 0,
+    currhp: 0,
+    xp: 0,
+    gold: 0,
+  });
   try {
     const savedUser = await user.save();
     const savedWelcomeMessage = await welcomeMessage.save();
     const savedProfile = await profile.save();
+    const savedEnemy = await enemy.save();
     //res.send({ user: savedUser._id });
     //res.status(StatusCodes.CREATED);
     //send back auth_token
     //res.send({ success: true, message: user._id });
     //return;
-
     //afterter register do login hiddenly
     next();
   } catch (error) {

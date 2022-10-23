@@ -14,7 +14,8 @@ const buyChar = async (req, res, next) => {
 
   //asuming receving new array for now
   const newChar_bought = req.body.char_bought;
-  const result = await Profile.updateOne(profile_info, { $set: { char_bought: newChar_bought } });
+  const n_gold = req.body.gold;
+  const result = await Profile.updateOne(profile_info, { $set: { char_bought: newChar_bought, gold: n_gold } });
   //console.log(result);
   if (result.modifiedCount == 0) {
     const profileError = new ProfileError('No update was done', StatusCodes.BAD_REQUEST);

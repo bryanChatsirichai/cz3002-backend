@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 const { curFormateDate } = require('../service/utils/formateDate');
-//Schema of Message
+//Schema of Profile
 const ProfileSchema = new mongoose.Schema({
   //tie each Profile to user-id
   userId: {
@@ -21,7 +21,11 @@ const ProfileSchema = new mongoose.Schema({
   },
   char_bought: {
     type: Array,
-    default: [],
+    default: ['warrior 1'],
+  },
+  char_equipped: {
+    type: Array,
+    default: ['warrior 1'],
   },
   //   createdAt: {
   //     type: String,

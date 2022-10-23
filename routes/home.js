@@ -10,9 +10,15 @@ const updateTask = require('../controllers/taskControllers/updateTaskController'
 //PROFILE
 const getProfile = require('../controllers/profileControllers/getProfile');
 const updateProfile = require('../controllers/profileControllers/updateProfile');
+const updateEquipChar = require('../controllers/profileControllers/updateEquipChar');
 
 //SHOP
 const buyChar = require('../controllers/shopController/buyChar');
+
+//ENEMY
+const getEnemy = require('../controllers/enemyControllers/getEnemy');
+const updateEnemy = require('../controllers/enemyControllers/updateEnemy');
+const damageEnemy = require('../controllers/enemyControllers/damageEnemy');
 
 //private route - middlerwear
 const verify = require('./verifyToken');
@@ -41,8 +47,22 @@ router.route('/profile').get(verify, getProfile);
 // update the profile
 router.route('/profile').patch(verify, updateProfile);
 
-// /home/shop
+//home/profile/equipChar
+// update char_equip
+router.route('/profile/equipChar').patch(verify, updateEquipChar);
+
+// /home/shop/characters
 //buy character from shop
 router.route('/shop/characters').patch(verify, buyChar);
 
+// /home/enemy
+
+//get enemy
+router.route('/enemy').get(verify, getEnemy);
+
+//update/set enemy
+router.route('/enemy/update').patch(verify, updateEnemy);
+
+//damage enemy
+router.route('/enemy/damage').patch(verify, damageEnemy);
 module.exports = router;
