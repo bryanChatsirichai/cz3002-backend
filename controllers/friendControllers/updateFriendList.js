@@ -4,8 +4,8 @@ require('dotenv').config();
 const Profile = require('../../service/profileServices/updateProfile');
 const ProfileError = require('../../middlewear/customErrors/profileError');
 const { StatusCodes } = require('http-status-codes');
-const buyChar = async (req, res, next) => {
-  //console.log('updating profile char_bought');
+const updateFriendList = async (req, res, next) => {
+  console.log('updating FriendList');
   const profile_info = {
     userId: req.body.user._id,
   };
@@ -13,9 +13,8 @@ const buyChar = async (req, res, next) => {
   //example syntax updateOne({ name: 'Annu' }, { $set: { age: 25 } });
 
   //asuming receving new array for now
-  const newChar_bought = req.body.char_bought;
-  const n_gold = req.body.gold;
-  const result = await Profile.updateOne(profile_info, { $set: { char_bought: newChar_bought, gold: n_gold } });
+  const newFriend_List = req.body.friends;
+  const result = await Profile.updateOne(profile_info, { $set: { friends: newFriend_List } });
   //console.log(result);
   if (result.modifiedCount == 0) {
     const profileError = new ProfileError('No update was done', StatusCodes.BAD_REQUEST);
@@ -28,4 +27,4 @@ const buyChar = async (req, res, next) => {
   return;
 };
 
-module.exports = buyChar;
+module.exports = updateFriendList;

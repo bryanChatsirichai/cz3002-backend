@@ -21,13 +21,13 @@ const ProfileSchema = new mongoose.Schema({
   },
   char_bought: {
     type: Array,
-    default: ["warrior 1"],
+    default: ['warrior 1'],
   },
   char_equipped: {
     type: Array,
-    default: ["warrior 1"],
+    default: ['warrior 1'],
   },
-  freinds: {
+  friends: {
     type: Array,
     default: [],
   },

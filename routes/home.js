@@ -20,6 +20,14 @@ const getEnemy = require('../controllers/enemyControllers/getEnemy');
 const updateEnemy = require('../controllers/enemyControllers/updateEnemy');
 const damageEnemy = require('../controllers/enemyControllers/damageEnemy');
 
+//FRIENDS
+const getFriendList = require('../controllers/friendControllers/getFreindList');
+const updateFriendList = require('../controllers/friendControllers/updateFriendList');
+const addFriend = require('../controllers/friendControllers/addFriend');
+
+// USERS
+const getAllUsers = require('../controllers/usersConstroller/getAllUsers');
+
 //private route - middlerwear
 const verify = require('./verifyToken');
 
@@ -56,7 +64,6 @@ router.route('/profile/equipChar').patch(verify, updateEquipChar);
 router.route('/shop/characters').patch(verify, buyChar);
 
 // /home/enemy
-
 //get enemy
 router.route('/enemy').get(verify, getEnemy);
 
@@ -65,4 +72,21 @@ router.route('/enemy/update').patch(verify, updateEnemy);
 
 //damage enemy
 router.route('/enemy/damage').patch(verify, damageEnemy);
+
+// home/friends
+// get friend list
+router.route('/friends').get(verify, getFriendList);
+
+// home/freinds
+// update friends list
+router.route('/friends/update').patch(verify, updateFriendList);
+
+// /home/getAllusers
+// get all users
+router.route('/users/getAllUsers').get(getAllUsers);
+
+// /home/addFriend
+// add friend both ways 'bad implementation as'
+router.route('/users/addFriend').post(verify, addFriend);
+
 module.exports = router;
